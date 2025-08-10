@@ -1,8 +1,13 @@
-FROM espressif/idf:v5.5
-# Install and configure locales for UTF-8 support
-RUN apt-get update && \
-    apt-get install -y locales && \
-    locale-gen en_US.UTF-8 && \
-    echo "export LANG=en_US.UTF-8" >> /root/.bashrc && \
-    echo "export LC_ALL=en_US.UTF-8" >> /root/.bashrc
-RUN echo "source /opt/esp/idf/export.sh" >> /root/.bashrc
+ARG DOCKER_TAG=latest
+FROM espressif/idf:${DOCKER_TAG}
+
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
+
+RUN apt-get update -y && apt-get install udev -y
+
+RUN echo "source /opt/esp/idf/export.sh > /dev/null 2>&1" >> ~/.bashrc
+
+ENTRYPOINT [ "/opt/esp/entrypoint.sh" ]
+
+CMD ["/bin/bash", "-c"]

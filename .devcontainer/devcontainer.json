@@ -1,7 +1,10 @@
 {
-	"name": "ESP-IDF",
+	"name": "ESP-IDF QEMU",
 	"build": {
-		"dockerfile": "Dockerfile"
+		"dockerfile": "Dockerfile",
+		"args": {
+			"DOCKER_TAG": "v5.5"
+		}
 	},
 	"customizations": {
 		"vscode": {
@@ -9,16 +12,15 @@
 				"idf.showOnboardingOnInit": false,
 				"idf.toolsPath": "/opt/esp",
 				"idf.espIdfPath": "/opt/esp/idf",
-				"idf.pythonBinPath": "/opt/esp/python_env/idf5.5_py3.12_env/bin/python",
-				"idf.port": "/dev/ttyUSB0",
-				"terminal.integrated.shell.linux": "/bin/bash"
+				"idf.gitPath": "/usr/bin/git"
 			},
 			"extensions": [
 				"espressif.esp-idf-extension",
+				"espressif.esp-idf-web",
 				"ms-vscode.cmake-tools",
 				"ms-vscode.cpptools"
 			]
 		}
 	},
-	"userEnvProbe": "loginInteractiveShell"
+	"runArgs": ["--privileged"]
 }
